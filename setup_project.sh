@@ -7,7 +7,7 @@ emergency_cleanup(){
     echo "Ctrl+C detected! Saving progress and cleaning up..."
 
     if [ -n "$PROJECT_DIR" ] && [ -d "$PROJECT_DIR" ]; then
-        ARCHIVE_NAME="${PROJECT_DIR}_archive.tar.gz"
+        ARCHIVE_NAME="${PROJECT_DIR}_archive"
         echo "Creating backup archive file: $ARCHIVE_NAME"
         tar -czf "$ARCHIVE_NAME" "$PROJECT_DIR"
         
