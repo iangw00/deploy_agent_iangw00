@@ -20,3 +20,22 @@ emergency_cleanup(){
     fi
     exit 1
 }
+echo "=== Welcome to the Automated Bootstrapping System ==="
+echo -n "Enter project name: "
+read -r SUFFIX
+
+PROJECT_DIR="attendance_tracker_${SUFFIX}"
+
+
+if [ -d "$PROJECT_DIR" ]; then
+    echo "Error: $PROJECT_DIR already exists!"
+    exit 1
+fi
+
+
+trap emergency_cleanup SIGINT
+
+
+echo "Creating project directories..."
+mkdir -p "$PROJECT_DIR/Helpers"
+mkdir -p "$PROJECT_DIR/reports"
