@@ -50,4 +50,7 @@ The script includes an emergency backup and cleanup feature controlled via a POS
 2. Press `Ctrl + C` on your keyboard while the script is waiting for user input.
 
 
+[Video](https://youtube.com)
+
+
 
