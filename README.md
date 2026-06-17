@@ -34,7 +34,7 @@ Run the script from your terminal:
 
 3. Follow the Prompts
 
-- **Project Name**: The script will ask you for a project suffix. If you type v1, it will create a workspace directory named attendance_tracker_v1.
+- **Project Name**: The script will ask you for a project suffix. If you type v1, it will create a workspace directory named attendance_tracker_{input}. where input is determined by the user.
 
 - Configuration Update: You will be prompted to choose whether to customize the attendance thresholds `(y/n)`. If you select yes, enter numeric values for the warning and failure limits.
 
