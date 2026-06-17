@@ -117,3 +117,68 @@ cat << 'EOF' > "$PROJECT_DIR/reports/reports.log"
 EOF
 
 echo "All core files generated successfully."
+
+
+echo ""
+echo "=== Configuration Settings ==="
+echo -n "Do you want to update attendance thresholds? (y/n): "
+read -r UPDATE_CHOICE
+
+case "$UPDATE_CHOICE" in
+    [Yy]*) 
+        echo "-> Initiating configuration update..."
+        
+        
+        while true; do
+            echo -n "Enter Warning Threshold (e.g., 80 or 80%): "
+            read -r RAW_WARN
+            
+            
+            WARN_VAL="${RAW_WARN//%/}"
+            
+            
+            if [[ "$WARN_VAL" =~ ^[0-9]+$ ]]; then
+                break
+            else
+                echo "Invalid input. Please enter numbers only."
+            fi
+        done
+
+        
+        while true; do
+            echo -n "Enter Failure Threshold (e.g., 60 or 60%): "
+            read -r RAW_FAIL
+            
+            
+            FAIL_VAL="${RAW_FAIL//%/}"
+            
+            if [[ "$FAIL_VAL" =~ ^[0-9]+$ ]]; then
+                break
+            else
+                echo "Invalid input. Please enter numbers only."
+            fi
+        done
+
+        echo "Applying configuration patches..."
+        
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS / MacBook Pro specific format (requires the empty '' quotes)
+            sed -i '' "s/\"warning\": [0-9]*/\"warning\": $WARN_VAL/" "$PROJECT_DIR/Helpers/config.json"
+            sed -i '' "s/\"failure\": [0-9]*/\"failure\": $FAIL_VAL/" "$PROJECT_DIR/Helpers/config.json"
+        else
+            # Standard Linux / Ubuntu format
+            sed -i "s/\"warning\": [0-9]*/\"warning\": $WARN_VAL/" "$PROJECT_DIR/Helpers/config.json"
+            sed -i "s/\"failure\": [0-9]*/\"failure\": $FAIL_VAL/" "$PROJECT_DIR/Helpers/config.json"
+        fi
+
+        echo "config.json threshold elements dynamically updated."
+        ;;
+
+    [Nn]*)
+        echo "Keeping original default parameters."
+        ;;
+
+    *)
+        echo "Invalid response detected. Skipping configuration update and using defaults."
+        ;;
+esac
