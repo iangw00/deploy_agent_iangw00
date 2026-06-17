@@ -182,3 +182,41 @@ case "$UPDATE_CHOICE" in
         echo "Invalid response detected. Skipping configuration update and using defaults."
         ;;
 esac
+
+
+echo ""
+echo "=== Checking System Health ==="
+
+if python3 --version  &>/dev/null; then
+    echo "Python3 detected."
+    python3 --version
+else
+    echo "Warning: Python3 is not installed on this system."
+fi
+
+
+
+echo ""
+echo "🔍 Verification: Confirming all critical project files exist..."
+
+if [ -f "$PROJECT_DIR/attendance_checker.py" ] && \
+   [ -f "$PROJECT_DIR/Helpers/assets.csv" ] && \
+   [ -f "$PROJECT_DIR/Helpers/config.json" ] && \
+   [ -f "$PROJECT_DIR/reports/reports.log" ]; then
+    
+    echo "Directory structure validated."
+else
+    echo "Structure validation failed. Some files are missing!"
+    exit 1
+fi
+
+
+
+echo ""
+echo "===================================================="
+echo "Setup Finished! Project created: $PROJECT_DIR"
+echo "===================================================="
+
+
+trap - SIGINT
+exit 0
